@@ -15,8 +15,6 @@ Austrian map is by [@ginseng666](https://github.com/ginseng666/GeoJSON-TopoJSON-
 
 Austrian hospital bed information from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](http://www.kaz.bmgf.gv.at/ressourcen-inanspruchnahme/betten.html).
 
-http://dashcoch-at.herokuapp.com
-
 ## Map Overview of Austrian Data
 
 [https://dashcoch-at.herokuapp.com](https://dashcoch-at.herokuapp.com)
