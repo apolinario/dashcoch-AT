@@ -66,7 +66,7 @@ class DataLoader:
         self.canton_labels = [
             canton
             for canton in self.swiss_cases_as_dict
-            if canton != "CH" and canton != "Date"
+            if canton != "AT" and canton != "Date"
         ]
         self.cantonal_centres = self.__get_cantonal_centres()
 
@@ -104,28 +104,28 @@ class DataLoader:
     def __get_new_cases(self):
         if (
             date.fromisoformat(self.latest_date)
-            != datetime.now(timezone("Europe/Zurich")).date()
+            != datetime.now(timezone("Europe/Vienna")).date()
         ):
             return 0
 
         l = len(self.swiss_cases_by_date_filled)
         return (
             self.swiss_cases_by_date_filled.diff().iloc[l - 1].sum()
-            - self.swiss_cases_by_date_filled.diff().iloc[l - 1]["CH"]
+            - self.swiss_cases_by_date_filled.diff().iloc[l - 1]["AT"]
         )
 
     def __get_total_swiss_cases(self):
         l = len(self.swiss_cases_by_date_filled)
         return (
             self.swiss_cases_by_date_filled.iloc[l - 1].sum()
-            - self.swiss_cases_by_date_filled.iloc[l - 1]["CH"]
+            - self.swiss_cases_by_date_filled.iloc[l - 1]["AT"]
         )
 
     def __get_total_swiss_fatalities(self):
         l = len(self.swiss_fatalities_by_date)
         return (
             self.swiss_fatalities_by_date.iloc[l - 1].sum()
-            - self.swiss_fatalities_by_date.iloc[l - 1]["CH"]
+            - self.swiss_fatalities_by_date.iloc[l - 1]["AT"]
         )
 
     def __get_swiss_cases_as_normalized_dict(self):
@@ -153,15 +153,7 @@ class DataLoader:
         df = df.T
         df.drop(
             df.columns.difference(
-                [
-                    "France",
-                    "Germany",
-                    "Italy",
-                    "Korea, South",
-                    "Spain",
-                    "United Kingdom",
-                    "US",
-                ]
+                ["France", "Germany", "Italy",  "Korea, South", "Spain", "US", "United Kingdom", "Switzerland",]
             ),
             1,
             inplace=True,
@@ -171,7 +163,7 @@ class DataLoader:
 
     def __get_swiss_world_cases_normalized(self, min_prevalence: int = 0.4):
         tmp = self.world_cases.copy()
-        tmp["Switzerland"] = pd.Series(self.swiss_cases_as_dict["CH"])
+        tmp["Austria"] = pd.Series(self.swiss_cases_as_dict["AT"])
 
         for column in tmp:
             tmp[column] = tmp[column] / self.world_population[column] * 10000
@@ -194,34 +186,18 @@ class DataLoader:
             "United Kingdom": 67886011,
             "Switzerland": 8654622,
             "Korea, South": 51269185,
+            "Austria": 8902600,
         }
 
     def __get_cantonal_centres(self):
         return {
-            "AG": {"lat": 47.40966, "lon": 8.15688},
-            "AR": {"lat": 47.366352 + 0.05, "lon": 9.36791},
-            "AI": {"lat": 47.317264, "lon": 9.416754},
-            "BL": {"lat": 47.45176, "lon": 7.702414},
-            "BS": {"lat": 47.564869, "lon": 7.615259},
-            "BE": {"lat": 46.823608, "lon": 7.636667},
-            "FR": {"lat": 46.718391, "lon": 7.074008},
-            "GE": {"lat": 46.220528, "lon": 6.132935},
-            "GL": {"lat": 46.981042 - 0.05, "lon": 9.065751},
-            "GR": {"lat": 46.656248, "lon": 9.628198},
-            "JU": {"lat": 47.350744, "lon": 7.156107},
-            "LU": {"lat": 47.067763, "lon": 8.1102},
-            "NE": {"lat": 46.995534, "lon": 6.780126},
-            "NW": {"lat": 46.926755, "lon": 8.405302},
-            "OW": {"lat": 46.854527 - 0.05, "lon": 8.244317 - 0.1},
-            "SH": {"lat": 47.71357, "lon": 8.59167},
-            "SZ": {"lat": 47.061787, "lon": 8.756585},
-            "SO": {"lat": 47.304135, "lon": 7.639388},
-            "SG": {"lat": 47.2332 - 0.05, "lon": 9.274744},
-            "TI": {"lat": 46.295617, "lon": 8.808924},
-            "TG": {"lat": 47.568715, "lon": 9.091957},
-            "UR": {"lat": 46.771849, "lon": 8.628586},
-            "VD": {"lat": 46.570091, "lon": 6.657809 - 0.1},
-            "VS": {"lat": 46.209567, "lon": 7.604659},
-            "ZG": {"lat": 47.157296, "lon": 8.537294},
-            "ZH": {"lat": 47.41275, "lon": 8.65508},
+            "W": {"lat": 48.2084885, "lon": 16.3720798},
+            "K": {"lat": 46.624253, "lon": 14.307528},
+            "B": {"lat": 47.84565, "lon": 16.52327},
+            "OÖ": {"lat": 48.30639, "lon": 14.28611},
+            "NÖ": {"lat": 48.333332, "lon": 15.749997},
+            "T": {"lat": 47.26266, "lon": 11.39454},
+            "S": {"lat": 47.811195, "lon": 13.033229},
+            "ST": {"lat": 47.076668, "lon": 15.421371},
+            "V": {"lat": 47.50311, "lon": 9.7471},
         }

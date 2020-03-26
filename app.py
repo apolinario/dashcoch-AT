@@ -26,7 +26,7 @@ style = StyleLoader()
 #
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
-app.title = "Swiss COVID19 Tracker"
+app.title = "Austria COVID19 Tracker"
 
 #
 # Show the data
@@ -37,40 +37,15 @@ app.layout = html.Div(
         html.Div(
             id="header",
             children=[
-                html.H4(children="COVID-19 Cases Switzerland"),
+                html.H4(children="COVID-19 Cases Austria"),
                 html.P(
                     id="description",
                     children=[
                         dcc.Markdown(
-                            """Number of COVID-19 cases in Switzerland. Data compiled and visualised by [@skepteis](https://twitter.com/skepteis).
-                        The data sources can be found [here](https://github.com/daenuprobst/covid19-cases-switzerland).
-                        Please direct any criticism or ideas to me.
+                            """Number of COVID-19 cases in Austria.
+                        Data from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](https://www.sozialministerium.at). No data has been taken from news websites, newspapers, etc. Software by [@skepteis](https://twitter.com/skepteis), adopted for Austria by [@osaukh](https://twitter.com/osaukh).
                         """
                         )
-                    ],
-                ),
-                html.P(
-                    id="glueckskette",
-                    children=[
-                        html.A(
-                            [
-                                html.Span(
-                                    "Here's a link to the fundraiser by Glückskette. This outbreak is hitting a lot of people really hard. We're all in this together, let's look out for each other! (Glückskette is not affiliated with this project)"
-                                ),
-                                html.Br(),
-                                html.Img(
-                                    src="https://www.glueckskette.ch/wp-content/uploads/ch/logo-emergency-de.svg",
-                                    style={"width": "200px"},
-                                ),
-                            ],
-                            href="https://www.glueckskette.ch/",
-                        ),
-                    ],
-                ),
-                html.P(
-                    id="important",
-                    children=[
-                        "All data shown on this website was collected from the cantonal data published on the cantonal websites. No data is being taken from news websites, newspapers, etc."
                     ],
                 ),
             ],
@@ -166,13 +141,13 @@ app.layout = html.Div(
         ),
         html.Div(
             children=[
-                "Cantons updated today: ",
+                "States updated today: ",
                 html.Span(", ".join(data.updated_cantons)),
             ]
         ),
         html.Br(),
         html.H4(
-            children="Data for Switzerland", style={"color": style.theme["accent"]}
+            children="Data for Austria", style={"color": style.theme["accent"]}
         ),
         html.Div(
             className="slider-container",
@@ -217,7 +192,7 @@ app.layout = html.Div(
             ],
         ),
         html.Br(),
-        html.H4(children="Data per Canton", style={"color": style.theme["accent"]}),
+        html.H4(children="Data per State", style={"color": style.theme["accent"]}),
         html.Div(
             id="plot-settings-container",
             children=[
@@ -288,6 +263,19 @@ app.layout = html.Div(
             id="table",
             columns=[{"name": i, "id": i} for i in data.swiss_cases.columns],
             data=data.swiss_cases.to_dict("records"),
+        ),
+        html.P(
+            id="footer",
+            children=[
+                dcc.Markdown(
+                    """Number of COVID-19 cases in Austria.
+                    Number of confirmed infected and fatality cases from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](https://www.sozialministerium.at). No data has been taken from news websites, newspapers, etc. Software by [@skepteis](https://twitter.com/skepteis), adopted for Austria by [@osaukh](https://twitter.com/osaukh).
+                    Austrian map from [@ginseng666](https://github.com/ginseng666/GeoJSON-TopoJSON-Austria).
+                    Austrian bed information from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](http://www.kaz.bmgf.gv.at/ressourcen-inanspruchnahme/betten.html).
+                    Dashboards for other countries: [Switzerland](http://www.corona-data.ch)
+                    """
+                )
+            ],
         ),
     ],
 )
@@ -363,9 +351,9 @@ def update_graph_map(selected_date_index, mode):
             {
                 "type": "choropleth",
                 "locations": data.canton_labels,
-                "z": [map_data[canton][date] for canton in map_data if canton != "CH"],
+                "z": [map_data[canton][date] for canton in map_data if canton != "AT"],
                 "colorscale": style.turbo,
-                "geojson": "/assets/switzerland.geojson",
+                "geojson": "/assets/austria.geojson",
                 "marker": {"line": {"width": 0.0, "color": "#08302A"}},
                 "colorbar": {
                     "thickness": 10,
@@ -377,9 +365,9 @@ def update_graph_map(selected_date_index, mode):
         "layout": {
             "geo": {
                 "visible": False,
-                "center": {"lat": 46.80111, "lon": 8.22667},
-                "lataxis": {"range": [45.7845, 47.8406]},
-                "lonaxis": {"range": [5.5223, 10.5421]},
+                "center": {"lat": 47.700033, "lon": 13.463449},
+                "lataxis": {"range": [46.2845, 49.6406]},
+                "lonaxis": {"range": [9.5223, 17.363449]},
                 # "fitbounds": "geojson",
                 "projection": {"type": "transverse mercator"},
                 # "landcolor": "#1f2630",
@@ -408,7 +396,7 @@ def update_graph_map(selected_date_index, mode):
 
 
 #
-# Total cases Switzerland
+# Total cases Austria
 #
 @app.callback(
     Output("case-ch-graph", "figure"), [Input("radio-scale-switzerland", "value")],
@@ -418,14 +406,14 @@ def update_case_ch_graph(selected_scale):
         "data": [
             {
                 "x": data.swiss_cases_as_dict["Date"],
-                "y": data.swiss_cases_as_dict["CH"],
-                "name": "CH",
+                "y": data.swiss_cases_as_dict["AT"],
+                "name": "AT",
                 "marker": {"color": style.theme["foreground"]},
-                # "type": "bar",
+                "type": "bar",
             }
         ],
         "layout": {
-            "title": "Total Cases Switzerland",
+            "title": "Total Cases Austria",
             "height": 400,
             "xaxis": {"showgrid": True, "color": "#ffffff", "title": "Date"},
             "yaxis": {
@@ -451,14 +439,14 @@ def update_fatalities_ch_graph(selected_scale):
         "data": [
             {
                 "x": data.swiss_fatalities["Date"],
-                "y": data.swiss_fatalities["CH"],
-                "name": "CH",
+                "y": data.swiss_fatalities["AT"],
+                "name": "AT",
                 "marker": {"color": style.theme["foreground"]},
-                # "type": "bar",
+                "type": "bar",
             }
         ],
         "layout": {
-            "title": "Total Fatalities Switzerland",
+            "title": "Total Fatalities Austria",
             "height": 400,
             "xaxis": {"showgrid": True, "color": "#ffffff", "title": "Date"},
             "yaxis": {
@@ -523,11 +511,11 @@ def update_fatalities_world_graph(selected_scale):
     return {
         "data": [
             {
-                "x": ["Switzerland"]
+                "x": ["Austria"]
                 + data.world_case_fatality_rate.index.values.tolist(),
                 "y": [data.swiss_case_fatality_rate]
                 + [val for val in data.world_case_fatality_rate],
-                "name": "CH",
+                "name": "AT",
                 "marker": {"color": style.theme["foreground"]},
                 "type": "bar",
             }
@@ -570,7 +558,7 @@ def update_case_graph(selected_cantons, selected_scale):
             if canton in selected_cantons
         ],
         "layout": {
-            "title": "Cases per Canton",
+            "title": "Cases per State",
             "height": 750,
             "xaxis": {"showgrid": True, "color": "#ffffff", "title": "Date"},
             "yaxis": {
@@ -603,7 +591,7 @@ def update_case_pc_graph(selected_cantons, selected_scale):
             if canton in selected_cantons
         ],
         "layout": {
-            "title": "Cases per Canton (per 10,000 Inhabitants)",
+            "title": "Cases per State (per 10,000 Inhabitants)",
             "height": 750,
             "xaxis": {"showgrid": True, "color": "#ffffff", "title": "Date"},
             "yaxis": {
@@ -657,7 +645,7 @@ def update_case_graph_diff(selected_cantons, selected_scale):
             if canton in selected_cantons
         ],
         "layout": {
-            "title": "New Cases per Canton",
+            "title": "New Cases per State",
             "height": 750,
             "xaxis": {"showgrid": True, "color": "#ffffff", "title": "Date"},
             "yaxis": {

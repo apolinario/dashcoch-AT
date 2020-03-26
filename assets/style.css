@@ -6,7 +6,7 @@ body {
 
 div#main {
   padding: 20px;
-  background-color: #1f2630;
+  background-color: #000;
 }
 
 table,
@@ -19,13 +19,6 @@ table th {
 
 table tr:hover {
   background-color: #252e3f !important;
-}
-
-#plot-settings-container,
-.slider-container,
-.dash-graph {
-  border-right: 2px solid #222;
-  border-bottom: 2px solid #222;
 }
 
 /* Map style */
@@ -43,7 +36,6 @@ g.layer rect {
   display: inline-block;
   padding: 10px;
   margin-right: 20px;
-  margin-bottom: 20px;
   background-color: #252e3f;
 }
 
@@ -565,19 +557,6 @@ legend {
   margin-bottom: 0;
 }
 
-#radio-scale-switzerland label,
-#radio-scale-cantons label,
-#radio-scale label,
-#radio-prevalence label {
-  margin-right: 2rem;
-  font-size: 1.75rem;
-}
-
-label > input[type="radio"] {
-  position: relative;
-  top: 2px;
-}
-
 fieldset {
   padding: 0;
   border-width: 0;
@@ -585,7 +564,7 @@ fieldset {
 
 input[type="checkbox"],
 input[type="radio"] {
-  display: inline-block;
+  display: inline;
 }
 
 label > .label-body {
@@ -717,11 +696,15 @@ hr {
 /* Slider
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-.slider-container,
+#slider-container {
+  background-color: #252e3f;
+  padding: 2rem 6rem 4rem 4rem;
+  height: 12rem;
+}
+
 #plot-settings-container {
   background-color: #252e3f;
-  padding: 10px;
-  /* height: 12rem; */
+  padding: 2rem 6rem 4rem 4rem;
 }
 
 .rc-slider-dot-active,
@@ -923,18 +906,7 @@ hr {
 }
 
 #header {
-  padding: 20px;
-  background-color: #1a2e4a;
-  margin-bottom: 20px;
-  margin-top: -20px;
-  margin-left: -20px;
-  margin-right: -20px;
-  border-bottom: 2px solid #212933;
-}
-
-#header h4 {
-  color: white;
-  margin-bottom: 20px;
+  margin-left: 1.5%;
 }
 
 div,
