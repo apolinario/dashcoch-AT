@@ -365,7 +365,7 @@ def update_graph_map(selected_date_index, mode):
         "layout": {
             "geo": {
                 "visible": False,
-                "center": {"lat": 47.700033, "lon": 13.463449},
+                "center": {"lat": 47.700033, "lon": 13.263449},
                 "lataxis": {"range": [46.2845, 49.6406]},
                 "lonaxis": {"range": [9.5223, 17.363449]},
                 # "fitbounds": "geojson",
