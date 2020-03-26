@@ -43,7 +43,7 @@ app.layout = html.Div(
                     children=[
                         dcc.Markdown(
                             """Number of COVID-19 cases in Austria.
-                        Data from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](https://www.sozialministerium.at). No data has been taken from news websites, newspapers, etc. Software by [@skepteis](https://twitter.com/skepteis), adopted for Austria by [@osaukh](https://twitter.com/osaukh).
+                        Data from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](https://www.sozialministerium.at). No data has been taken from news websites, newspapers, etc. Software by [@skepteis](https://twitter.com/skepteis), adapted to and for Austria by [@osaukh](https://twitter.com/osaukh).
                         """
                         )
                     ],
@@ -269,7 +269,7 @@ app.layout = html.Div(
             children=[
                 dcc.Markdown(
                     """Number of COVID-19 cases in Austria.
-                    Number of confirmed infected and fatality cases from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](https://www.sozialministerium.at). No data has been taken from news websites, newspapers, etc. Software by [@skepteis](https://twitter.com/skepteis), adopted for Austria by [@osaukh](https://twitter.com/osaukh).
+                    Number of confirmed infected and fatality cases from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](https://www.sozialministerium.at). No data has been taken from news websites, newspapers, etc. Software by [@skepteis](https://twitter.com/skepteis), adapted to and for Austria by [@osaukh](https://twitter.com/osaukh).
                     Austrian map from [@ginseng666](https://github.com/ginseng666/GeoJSON-TopoJSON-Austria).
                     Austrian bed information from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](http://www.kaz.bmgf.gv.at/ressourcen-inanspruchnahme/betten.html).
                     Dashboards for other countries: [Switzerland](http://www.corona-data.ch)
