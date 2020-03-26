@@ -49,15 +49,15 @@ class StyleLoader:
         ]
 
         self.canton_colors = {
-            "B": "#87ceeb",
-            "K": "#57606f",
-            "NÖ": "#57606f",
-            "OÖ": "#EE5A24",
-            "S": "#e9403c",
-            "ST": "#F8EFBA",
+            "B": "#c0392b",
+            "K": "#af7ac5",
+            "NÖ": "#5dade2",
+            "OÖ": "#16a085",
+            "S": "#f1c40f",
+            "ST": "#f39c12",
             "T": "#ffffff",
-            "V": "#ffd134",
-            "W": "#B53471",
+            "V": "#d35400",
+            "W": "#2980b9",
         }
 
         self.theme = {
