@@ -43,11 +43,19 @@ app.layout = html.Div(
                     children=[
                         dcc.Markdown(
                             """Number of COVID-19 cases in Austria.
-                        Data from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](https://www.sozialministerium.at). No data has been taken from news websites, newspapers, etc. Software by [@skepteis](https://twitter.com/skepteis), adapted to and for Austria by [@osaukh](https://twitter.com/osaukh).
+                        Public data from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](https://www.sozialministerium.at). No data has been taken from news websites, newspapers, etc. Software by [@skepteis](https://twitter.com/skepteis), adapted to and for Austria by [@osaukh](https://twitter.com/osaukh).
                         """
                         )
                     ],
                 ),
+            ],
+        ),
+        html.Div(
+            className="info-container",
+            children=[
+                html.P(
+                    children="INFO: Am 28.03.2020 um 15:00 Uhr die gemeldete Gesamtzahl des Bundesministeriums weicht von der Summe der gemeldeten Bundesländer-Ergebnisse ab."
+                )
             ],
         ),
         html.Div(
