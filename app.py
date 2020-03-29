@@ -51,14 +51,6 @@ app.layout = html.Div(
             ],
         ),
         html.Div(
-            className="info-container",
-            children=[
-                html.P(
-                    children="INFO: Am 28.03.2020 um 15:00 Uhr die gemeldete Gesamtzahl des Bundesministeriums weicht von der Summe der gemeldeten Bundesländer-Ergebnisse ab."
-                )
-            ],
-        ),
-        html.Div(
             className="row",
             children=[
                 html.Div(
