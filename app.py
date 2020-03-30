@@ -28,6 +28,15 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 app.title = "Austria COVID19 Tracker"
 
+# google-analytics
+app.scripts.config.serve_locally = False
+app.scripts.append_script({
+    'external_url': 'http://dashcoch-at.herokuapp.com/assets/async_src.js'
+})
+app.scripts.append_script({
+    'external_url': 'http://dashcoch-at.herokuapp.com/assets/gtag.js'
+})
+
 #
 # Show the data
 #
@@ -43,7 +52,7 @@ app.layout = html.Div(
                     children=[
                         dcc.Markdown(
                             """Number of COVID-19 cases in Austria.
-                        Public data from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](https://www.sozialministerium.at). No data has been taken from news websites, newspapers, etc. Software by [@skepteis](https://twitter.com/skepteis), adapted to and for Austria by [@osaukh](https://twitter.com/osaukh).
+                        Public data from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](https://www.sozialministerium.at). No data has been taken from news websites, newspapers, etc. Software by [@skepteis](https://twitter.com/skepteis), adapted to and for Austria by [@osaukh](https://twitter.com/osaukh). This page uses [Google Analytics](https://marketingplatform.google.com/abaout/analytics/).
                         """
                         )
                     ],
