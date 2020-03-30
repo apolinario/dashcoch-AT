@@ -51,6 +51,14 @@ app.layout = html.Div(
             ],
         ),
         html.Div(
+            className="info-container",
+            children=[
+                html.P(
+                    children="Bitte beachten Sie, dass die heutigen Daten noch nicht vollständig aktualisiert sind. / Please be aware, that today's data is not yet completely updated."
+                )
+            ],
+        ),
+        html.Div(
             className="row",
             children=[
                 html.Div(
