@@ -52,7 +52,7 @@ app.layout = html.Div(
                     children=[
                         dcc.Markdown(
                             """Number of COVID-19 cases in Austria.
-                        Public data from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](https://www.sozialministerium.at). No data has been taken from news websites, newspapers, etc. Software by [@skepteis](https://twitter.com/skepteis), adapted to and for Austria by [@osaukh](https://twitter.com/osaukh). This page uses [Google Analytics](https://marketingplatform.google.com/abaout/analytics/).
+                        Public data from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](https://www.sozialministerium.at). No data has been taken from news websites, newspapers, etc. Software by [@skepteis](https://twitter.com/skepteis), adapted to and for Austria by [@osaukh](https://twitter.com/osaukh). This page uses [Google Analytics](https://analytics.google.com).
                         """
                         )
                     ],
