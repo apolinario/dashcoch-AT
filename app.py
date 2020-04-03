@@ -82,6 +82,15 @@ def get_layout():
             ],
         ),
         html.Div(
+            className="info-container",
+            children=[
+                html.P(
+                    children="Please note that the number of total fatalities reported for Vorarlberg today is smaller than yesterday."
+                )
+            ],
+        ),
+        html.Br(),
+        html.Div(
             className="row",
             children=[
                 html.Div(
