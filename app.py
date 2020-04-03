@@ -888,7 +888,7 @@ def update_case_graph(selected_cantons, selected_scale):
             if canton in selected_cantons
         ],
         "layout": {
-            "title": "Reported Cases per Canton",
+            "title": "Cases per State",
             "height": 400,
             "xaxis": {"showgrid": True, "color": "#ffffff", "title": "Date"},
             "yaxis": {
@@ -923,7 +923,7 @@ def update_case_pc_graph(selected_cantons, selected_scale):
             if canton in selected_cantons
         ],
         "layout": {
-            "title": "Reported Cases per Canton (per 10,000 Inhabitants)",
+            "title": "Cases per State (per 10,000 Inhabitants)",
             "height": 400,
             "xaxis": {"showgrid": True, "color": "#ffffff", "title": "Date"},
             "yaxis": {
