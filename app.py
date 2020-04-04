@@ -1041,14 +1041,14 @@ def store_caseincrease_cantona_data(value):
 def update_prevalence_density_graph(selected_cantons):
     return {
         "data": [
-            {
-                "x": data.prevalence_density_regression["x"],
-                "y": data.prevalence_density_regression["y"],
-                "mode": "lines",
-                "hoverinfo": "skip",
-                "showlegend": False,
-                "line": {"dash": "dash", "width": 2.0, "color": "#ffffff",},
-            }
+#            {
+#                "x": data.prevalence_density_regression["x"],
+#                "y": data.prevalence_density_regression["y"],
+#                "mode": "lines",
+#                "hoverinfo": "skip",
+#                "showlegend": False,
+#                "line": {"dash": "dash", "width": 2.0, "color": "#ffffff",},
+#            }
         ]
         + [
             {
@@ -1075,31 +1075,32 @@ def update_prevalence_density_graph(selected_cantons):
             "hovermode": "closest",
             "height": 400,
             "xaxis": {
+                "type": "log",
                 "showgrid": True,
                 "color": "#ffffff",
                 "title": "Population Density [Inhabitants/km2 Settlement Area]",
             },
             "yaxis": {"showgrid": True, "color": "#ffffff", "title": "Prevalence",},
-            "annotations": [
-                {
-                    "x": data.prevalence_density_regression["x"][1],
-                    "y": data.prevalence_density_regression["y"][1],
-                    "xref": "x",
-                    "yref": "y",
-                    "text": "r: "
-                    + str(round(data.prevalence_density_regression["r_value"], 2))
-                    + "<br>"
-                    + "p-value: "
-                    + str(round(data.prevalence_density_regression["p_value"], 2)),
-                    "showarrow": True,
-                    "arrowhead": 4,
-                    "ax": 50,
-                    "ay": 50,
-                    "font": {"size": 12, "color": "#ffffff",},
-                    "arrowcolor": "#ffffff",
-                    "align": "left",
-                }
-            ],
+#            "annotations": [
+#                {
+#                    "x": data.prevalence_density_regression["x"][1],
+#                    "y": data.prevalence_density_regression["y"][1],
+#                    "xref": "x",
+#                    "yref": "y",
+#                    "text": "r: "
+#                    + str(round(data.prevalence_density_regression["r_value"], 2))
+#                    + "<br>"
+#                    + "p-value: "
+#                    + str(round(data.prevalence_density_regression["p_value"], 2)),
+#                    "showarrow": True,
+#                    "arrowhead": 4,
+#                    "ax": 50,
+#                    "ay": 50,
+#                    "font": {"size": 12, "color": "#ffffff",},
+#                    "arrowcolor": "#ffffff",
+#                    "align": "left",
+#                }
+#            ],
             "dragmode": False,
             "margin": {"l": 60, "r": 20, "t": 60, "b": 70},
             "plot_bgcolor": style.theme["background"],
