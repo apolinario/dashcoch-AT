@@ -81,14 +81,14 @@ def get_layout():
                 ),
             ],
         ),
-        html.Div(
-            className="info-container",
-            children=[
-                html.P(
-                    children="Please note that the number of total fatalities reported for Vorarlberg today is smaller than yesterday."
-                )
-            ],
-        ),
+#        html.Div(
+#            className="info-container",
+#            children=[
+#                html.P(
+#                    children="Please note that the number of total fatalities reported for Vorarlberg today is smaller than yesterday."
+#                )
+#            ],
+#        ),
         html.Br(),
         html.Div(
             className="row",
@@ -101,7 +101,7 @@ def get_layout():
                             children=[
                                 html.P(
                                     className="total-title",
-                                    children="Total Cases",
+                                    children="Total Reported Cases",
                                 ),
                                 html.Div(
                                     className="total-content",
@@ -114,7 +114,7 @@ def get_layout():
                             children=[
                                 html.P(
                                     className="total-title",
-                                    children="Reported Today",
+                                    children="Reported Cases Today",
                                 ),
                                 html.Div(
                                     className="total-content",
