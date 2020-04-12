@@ -156,18 +156,13 @@ class DataLoader:
         ):
             return 0
 
-        l = len(self.swiss_cases_by_date_filled)
         return (
-            self.swiss_cases_by_date_filled.diff().iloc[l - 1].sum()
-            - self.swiss_cases_by_date_filled.diff().iloc[l - 1]["AT"]
+            self.swiss_cases_by_date_filled.iloc[-1]["AT"]
+            - self.swiss_cases_by_date_filled.iloc[-2]["AT"]
         )
 
     def __get_total_swiss_cases(self):
-        l = len(self.swiss_cases_by_date_filled)
-        return (
-            self.swiss_cases_by_date_filled.iloc[l - 1].sum()
-            - self.swiss_cases_by_date_filled.iloc[l - 1]["AT"]
-        )
+        return self.swiss_cases_by_date_filled.iloc[- 1]["AT"]
 
     def __get_total_swiss_fatalities(self):
         return self.swiss_fatalities_by_date_filled.iloc[-1]["AT"]
