@@ -74,7 +74,9 @@ def get_layout():
                     children=[
                         dcc.Markdown(
                             """Number of COVID-19 cases in Austria.
-                        Public data from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](https://www.sozialministerium.at). No data has been taken from news websites, newspapers, etc. Software by [@skepteis](https://twitter.com/skepteis), adapted to and for Austria by [@osaukh](https://twitter.com/osaukh). This page uses [Google Analytics](https://analytics.google.com).
+                        Public data from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](https://www.sozialministerium.at). No data has been taken from news websites, newspapers, etc.
+                        Software by [@skepteis](https://twitter.com/skepteis), adapted to and for Austria by [@osaukh](https://twitter.com/osaukh). This page uses [Google Analytics](https://analytics.google.com).
+                        The dashboard is listed by the [Austrian COVID-19 Open Data Infoportal](https://www.data.gv.at/covid-19/).
                         """
                         )
                     ],
