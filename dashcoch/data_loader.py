@@ -152,7 +152,7 @@ class DataLoader:
     def __get_new_cases(self):
         if (
             date.fromisoformat(self.latest_date)
-            != datetime.now(timezone("Europe/Vienna")).date()
+            != datetime.now(timezone("Europe/Kiev")).date()
         ):
             return 0
 
