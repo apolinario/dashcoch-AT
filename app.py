@@ -75,7 +75,7 @@ def get_layout():
                         dcc.Markdown(
                             """Number of COVID-19 cases in Austria.
                         Public data from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](https://www.sozialministerium.at). No data has been taken from news websites, newspapers, etc.
-                        Software by [@skepteis](https://twitter.com/skepteis), adapted to and for Austria by [@osaukh](https://twitter.com/osaukh). This page uses [Google Analytics](https://analytics.google.com).
+                        Software by [@skepteis](https://twitter.com/skepteis), adapted to and for Austria by [@osaukh](https://twitter.com/osaukh) from [CSH Vienna](http://www.csh.ac.at/). This page uses [Google Analytics](https://analytics.google.com).
                         The dashboard is listed by the [Austrian COVID-19 Open Data Infoportal](https://www.data.gv.at/covid-19/).
                         """
                         )
@@ -408,7 +408,8 @@ def get_layout():
             children=[
                 dcc.Markdown(
                     """The data is available on [GitHub](https://github.com/osaukh/dashcoch-AT/tree/master/data_AT).
-                    The numbers of confirmed infected and fatality cases are from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](https://www.sozialministerium.at). No data has been taken from news websites, newspapers, etc. Software by [@skepteis](https://twitter.com/skepteis), adapted to and for Austria by [@osaukh](https://twitter.com/osaukh).
+                    The numbers of confirmed infected and fatality cases are from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](https://www.sozialministerium.at). No data has been taken from news websites, newspapers, etc. Software by [@skepteis](https://twitter.com/skepteis), adapted to and for Austria by [@osaukh](https://twitter.com/osaukh) from [CSH Vienna](http://www.csh.ac.at/).
+                    The dashboard is listed by the [Austrian COVID-19 Open Data Infoportal](https://www.data.gv.at/covid-19/).
                     Austrian map from [@ginseng666](https://github.com/ginseng666/GeoJSON-TopoJSON-Austria).
                     Austrian demographic information from [Statistik Austria](http://www.statistik.at/web_de/statistiken/menschen_und_gesellschaft/bevoelkerung/bevoelkerungsstruktur/bevoelkerung_nach_alter_geschlecht/index.html).
                     Austrian bed information from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](http://www.kaz.bmgf.gv.at/ressourcen-inanspruchnahme/betten.html).
