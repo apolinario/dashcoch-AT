@@ -790,17 +790,35 @@ hr {
   /* height: 12rem; */
 }
 
-.rc-slider-dot-active,
-.rc-slider-handle {
-  border-color: #2cfec1 !important;
-}
-
 .rc-slider-track {
   background-color: #2cfec1 !important;
 }
 
 .rc-slider-rail {
   background-color: #1d2731 !important;
+}
+
+.rc-slider-handle {
+  background-color: #2cfec1 !important;
+  border-color: #30d6d6 !important;
+}
+
+.rc-slider-dot {
+  background-color: #1d2731 !important;
+  border-color: #2cfec1 !important;
+}
+
+.rc-slider-dot.rc-slider-dot-active {
+  background-color: #1d2731 !important;
+  border-color: #30d6d6 !important;
+}
+
+.rc-slider-mark-text.rc-slider-mark-text-active {
+  color: #30d6d6 !important;
+}
+
+.rc-slider-mark-text {
+  white-space: nowrap !important;
 }
 
 /* Heatmap

@@ -180,17 +180,19 @@ def get_layout():
             className="slider-container",
             children=[
                 html.P(
-                    id="slider-text", children="Drag the slider to change the date:",
+                    id="slider-text", children="Drag the slider to change the date",
                 ),
                 dcc.Slider(
                     id="slider-date",
                     min=0,
                     max=len(data.swiss_cases["Date"]) - 1,
-#                    marks={
-#                        i: date.fromisoformat(d).strftime("%d.")
-#                        for i, d in enumerate(data.swiss_cases["Date"])
-#                    },
+                    marks={
+                        i: date.fromisoformat(d).strftime("%d. %m.")
+                        for i, d in enumerate(data.swiss_cases["Date"])
+                        if date.fromisoformat(d).weekday() == 0
+                    },
                     value=len(data.swiss_cases["Date"]) - 1,
+                    updatemode="drag",
                 ),
             ],
         ),
@@ -198,14 +200,14 @@ def get_layout():
         html.H4(
             children="Data for Austria", style={"color": style.theme["accent"]}
         ),
-        html.Div(
-            className="info-container",
-            children=[
-                html.P(
-                    children="Bitte beachten Sie, dass die Abflachung der Kurven irreführend sein kann, da die heutigen Daten noch nicht vollständig aktualisiert sind. / Please be aware, that the flattening of the curves can be misleading, as today's data is not yet completely updated."
-                )
-            ],
-        ),
+#        html.Div(
+#            className="info-container",
+#            children=[
+#                html.P(
+#                    children="Bitte beachten Sie, dass die Abflachung der Kurven irreführend sein kann, da die heutigen Daten noch nicht vollständig aktualisiert sind. / Please be aware, that the flattening of the curves can be misleading, as today's data is not yet completely updated."
+#                )
+#            ],
+#        ),
         html.Div(
             className="slider-container",
             children=[
@@ -232,6 +234,19 @@ def get_layout():
                 html.Div(
                     className="six columns",
                     children=[dcc.Graph(id="fatalities-ch-graph")],
+                ),
+            ],
+        ),
+        html.Br(),
+        html.Div(
+            className="row",
+            children=[
+                html.Div(
+                    className="six columns", children=[dcc.Graph(id="new-case-ch-graph")]
+                ),
+                html.Div(
+                    className="six columns",
+                    children=[dcc.Graph(id="new-fatalities-ch-graph")],
                 ),
             ],
         ),
@@ -283,14 +298,14 @@ def get_layout():
         ),
         html.Br(),
         html.H4(children="Data per State", style={"color": style.theme["accent"]}),
-        html.Div(
-            className="info-container",
-            children=[
-                html.P(
-                    children="Bitte beachten Sie, dass die Abflachung der Kurven irreführend sein kann, da die heutigen Daten noch nicht vollständig aktualisiert sind. / Please be aware, that the flattening of the curves can be misleading, as today's data is not yet completely updated."
-                )
-            ],
-        ),
+#        html.Div(
+#            className="info-container",
+#            children=[
+#                html.P(
+#                    children="Bitte beachten Sie, dass die Abflachung der Kurven irreführend sein kann, da die heutigen Daten noch nicht vollständig aktualisiert sind. / Please be aware, that the flattening of the curves can be misleading, as today's data is not yet completely updated."
+#                )
+#            ],
+#        ),
         html.Div(
             id="plot-settings-container",
             children=[
@@ -364,13 +379,17 @@ def get_layout():
             children=[
                 html.P(
                     className="slider-text",
-                    children="Drag the slider to change the date:",
+                    children="Drag the slider to change the date",
                 ),
                 dcc.Slider(
                     id="slider-date-cantonal",
                     min=0,
                     max=len(data.swiss_cases["Date"]) - 1,
-                    step=1,
+                    marks={
+                        i: date.fromisoformat(d).strftime("%d. %m.")
+                        for i, d in enumerate(data.swiss_cases["Date"])
+                        if date.fromisoformat(d).weekday() == 0
+                    },
                     value=len(data.moving_total) - 1,
                     updatemode="drag",
                 ),
@@ -569,7 +588,7 @@ def update_case_ch_graph(selected_scale):
                 "x": data.swiss_cases["Date"],
                 "y": data.swiss_cases["AT"],
                 "name": "AT",
-                "type": "bar",
+                "type": "lines",
                 "marker": {"color": style.theme["foreground"]},
                 "showlegend": False,
             },
@@ -577,7 +596,7 @@ def update_case_ch_graph(selected_scale):
         "layout": {
             "title": "Total Reported Cases Austria",
             "height": 400,
-            "xaxis": {"showgrid": True, "color": "#ffffff", "title": "Date"},
+            "xaxis": {"showgrid": True, "color": "#ffffff"},
             "yaxis": {
                 "type": selected_scale,
                 "showgrid": True,
@@ -585,9 +604,9 @@ def update_case_ch_graph(selected_scale):
                 "rangemode": "tozero",
                 "title": "Reported Cases",
             },
-            "hovermode": "closest",
+            "hovermode": "x unified",
             "dragmode": False,
-            "margin": {"l": 60, "r": 20, "t": 60, "b": 70},
+            "margin": {"l": 60, "r": 20, "t": 60, "b": 40},
             "plot_bgcolor": style.theme["background"],
             "paper_bgcolor": style.theme["background"],
             "font": {"color": style.theme["foreground"]},
@@ -626,7 +645,7 @@ def update_caseincrease_ch_graph(selected_scale):
         ],
         "layout": {
             "title": "Newly Reported Cases",
-            "height": 400,
+            "height": 700,
             "xaxis": {
                 "showgrid": True,
                 "color": "#ffffff",
@@ -668,7 +687,7 @@ def update_fatalities_ch_graph(selected_scale):
                 "x": data.swiss_fatalities["Date"],
                 "y": data.swiss_fatalities["AT"],
                 "name": "AT",
-                "type": "bar",
+                "type": "lines",
                 "marker": {"color": style.theme["blue"]},
                 "showlegend": False,
             },
@@ -676,7 +695,7 @@ def update_fatalities_ch_graph(selected_scale):
         "layout": {
             "title": "Total Reported Fatalities Austria",
             "height": 400,
-            "xaxis": {"showgrid": True, "color": "#ffffff", "title": "Date"},
+            "xaxis": {"showgrid": True, "color": "#ffffff"},
             "yaxis": {
                 "type": selected_scale,
                 "showgrid": True,
@@ -684,12 +703,344 @@ def update_fatalities_ch_graph(selected_scale):
                 "rangemode": "tozero",
                 "title": "Fatalities",
             },
-            "hovermode": "closest",
+            "hovermode": "x unified",
             "dragmode": False,
-            "margin": {"l": 60, "r": 20, "t": 60, "b": 70},
+            "margin": {"l": 60, "r": 20, "t": 60, "b": 40},
             "plot_bgcolor": style.theme["background"],
             "paper_bgcolor": style.theme["background"],
             "font": {"color": style.theme["foreground"]},
+        },
+    }
+    
+@app.callback(
+    Output("new-case-ch-graph", "figure"),
+    [Input("radio-scale-switzerland", "value")],
+)
+def update_new_case_ch_graph(selected_scale):
+    total_column_name = "AT"
+    return {
+        "data": [
+            {
+                "x": data.swiss_cases_by_date_diff.index,
+                "y": data.swiss_cases_by_date_diff[total_column_name],
+                "name": total_column_name,
+                "type": "bar",
+                "marker": {"color": style.theme["foreground"], "opacity": 0.5},
+                "showlegend": False,
+            },
+            {
+                "x": data.swiss_cases_by_date_diff.index,
+                "y": data.swiss_cases_by_date_diff[total_column_name + "_rolling"],
+                "name": "moving_average",
+                "mode": "lines",
+                "marker": {"color": style.theme["foreground"]},
+                "fill": "tozeroy",
+            },
+        ],
+        "layout": {
+            "title": "Newly Reported Cases Austria",
+            "height": 400,
+            "xaxis": {
+                "showgrid": True,
+                "color": "#ffffff",
+            },
+            "yaxis": {
+                "type": selected_scale,
+                "showgrid": True,
+                "color": "#ffffff",
+                "rangemode": "tozero",
+                "title": "Daily Reported Cases",
+            },
+            "legend": {
+                "x": 0.015,
+                "y": 0.9,
+                "traceorder": "normal",
+                "font": {"family": "sans-serif", "color": "white"},
+                "bgcolor": style.theme["background"],
+                "bordercolor": style.theme["accent"],
+                "borderwidth": 1,
+            },
+            "hovermode": "x unified",
+            "dragmode": False,
+            "margin": {"l": 60, "r": 20, "t": 60, "b": 40},
+            "plot_bgcolor": style.theme["background"],
+            "paper_bgcolor": style.theme["background"],
+            "font": {"color": style.theme["foreground"]},
+            "shapes": [
+                {
+                    "type": "line",
+                    "xref": "x",
+                    "yref": "paper",
+                    "x0": "2020-03-17",
+                    "y0": 0,
+                    "x1": "2020-03-17",
+                    "y1": 1,
+                    "opacity": 1.0,
+                    "layer": "below",
+                    "line": {"width": 1.0, "color": "#ffffff", "dash": "dash",},
+                },
+                {
+                    "type": "line",
+                    "xref": "x",
+                    "yref": "paper",
+                    "x0": "2020-04-14",
+                    "y0": 0,
+                    "x1": "2020-04-14",
+                    "y1": 1,
+                    "opacity": 1.0,
+                    "layer": "below",
+                    "line": {"width": 1.0, "color": "#ffffff", "dash": "dash",},
+                },
+                {
+                    "type": "line",
+                    "xref": "x",
+                    "yref": "paper",
+                    "x0": "2020-05-01",
+                    "y0": 0,
+                    "x1": "2020-05-01",
+                    "y1": 1,
+                    "opacity": 1.0,
+                    "layer": "below",
+                    "line": {"width": 1.0, "color": "#ffffff", "dash": "dash",},
+                },
+                {
+                    "type": "line",
+                    "xref": "x",
+                    "yref": "paper",
+                    "x0": "2020-05-15",
+                    "y0": 0,
+                    "x1": "2020-05-15",
+                    "y1": 1,
+                    "opacity": 1.0,
+                    "layer": "below",
+                    "line": {"width": 1.0, "color": "#ffffff", "dash": "dash",},
+                },
+            ],
+            "annotations": [
+                {
+                    "x": "2020-03-16",
+                    "y": 0.92,
+                    "xref": "x",
+                    "yref": "paper",
+                    "text": "Lockdown",
+                    "font": {"color": style.theme["accent"]},
+                    "align": "left",
+                    "showarrow": True,
+                    "arrowhead": 2,
+                    "arrowsize": 1,
+                    "arrowwidth": 1,
+                    "arrowcolor": style.theme["accent"],
+                },
+                {
+                    "x": "2020-04-14",
+                    "y": 0.92,
+                    "xref": "x",
+                    "yref": "paper",
+                    "text": "Small Shops Open",
+                    "font": {"color": style.theme["accent"]},
+                    "align": "left",
+                    "showarrow": True,
+                    "arrowhead": 2,
+                    "arrowsize": 1,
+                    "arrowwidth": 1,
+                    "arrowcolor": style.theme["accent"],
+                },
+                {
+                    "x": "2020-05-01",
+                    "y": 0.92,
+                    "xref": "x",
+                    "yref": "paper",
+                    "text": "All Shops Open",
+                    "font": {"color": style.theme["accent"]},
+                    "align": "left",
+                    "showarrow": True,
+                    "arrowhead": 2,
+                    "arrowsize": 1,
+                    "arrowwidth": 1,
+                    "arrowcolor": style.theme["accent"],
+                },
+                {
+                    "x": "2020-05-15",
+                    "y": 0.92,
+                    "xref": "x",
+                    "yref": "paper",
+                    "text": "Restaurants Open",
+                    "font": {"color": style.theme["accent"]},
+                    "align": "left",
+                    "showarrow": True,
+                    "arrowhead": 2,
+                    "arrowsize": 1,
+                    "arrowwidth": 1,
+                    "arrowcolor": style.theme["accent"],
+                },
+            ],
+        },
+    }
+
+@app.callback(
+    Output("new-fatalities-ch-graph", "figure"),
+    [Input("radio-scale-switzerland", "value")],
+)
+def update_new_fatalities_ch_graph(selected_scale):
+    total_column_name = "AT"
+    return {
+        "data": [
+            {
+                "x": data.swiss_fatalities_by_date_diff.index,
+                "y": data.swiss_fatalities_by_date_diff[total_column_name],
+                "name": total_column_name,
+                "type": "bar",
+                "marker": {"color": style.theme["foreground"], "opacity": 0.5},
+                "showlegend": False,
+            },
+            {
+                "x": data.swiss_fatalities_by_date_diff.index,
+                "y": data.swiss_fatalities_by_date_diff[
+                    total_column_name + "_rolling"
+                ],
+                "name": "moving_average",
+                "mode": "lines",
+                "marker": {"color": style.theme["foreground"]},
+                "fill": "tozeroy",
+            },
+        ],
+        "layout": {
+            "title": "Newly Reported Fatalities Austria",
+            "height": 400,
+            "xaxis": {
+                "showgrid": True,
+                "color": "#ffffff",
+            },
+            "yaxis": {
+                "type": selected_scale,
+                "showgrid": True,
+                "color": "#ffffff",
+                "rangemode": "tozero",
+                "title": "Daily Reported Fatalities",
+            },
+            "legend": {
+                "x": 0.015,
+                "y": 0.9,
+                "traceorder": "normal",
+                "font": {"family": "sans-serif", "color": "white"},
+                "bgcolor": style.theme["background"],
+                "bordercolor": style.theme["accent"],
+                "borderwidth": 1,
+            },
+            "hovermode": "x unified",
+            "dragmode": False,
+            "margin": {"l": 60, "r": 20, "t": 60, "b": 40},
+            "plot_bgcolor": style.theme["background"],
+            "paper_bgcolor": style.theme["background"],
+            "font": {"color": style.theme["foreground"]},
+            "shapes": [
+                {
+                    "type": "line",
+                    "xref": "x",
+                    "yref": "paper",
+                    "x0": "2020-03-17",
+                    "y0": 0,
+                    "x1": "2020-03-17",
+                    "y1": 1,
+                    "opacity": 1.0,
+                    "layer": "below",
+                    "line": {"width": 1.0, "color": "#ffffff", "dash": "dash",},
+                },
+                {
+                    "type": "line",
+                    "xref": "x",
+                    "yref": "paper",
+                    "x0": "2020-04-14",
+                    "y0": 0,
+                    "x1": "2020-04-14",
+                    "y1": 1,
+                    "opacity": 1.0,
+                    "layer": "below",
+                    "line": {"width": 1.0, "color": "#ffffff", "dash": "dash",},
+                },
+                {
+                    "type": "line",
+                    "xref": "x",
+                    "yref": "paper",
+                    "x0": "2020-05-01",
+                    "y0": 0,
+                    "x1": "2020-05-01",
+                    "y1": 1,
+                    "opacity": 1.0,
+                    "layer": "below",
+                    "line": {"width": 1.0, "color": "#ffffff", "dash": "dash",},
+                },
+                {
+                    "type": "line",
+                    "xref": "x",
+                    "yref": "paper",
+                    "x0": "2020-05-15",
+                    "y0": 0,
+                    "x1": "2020-05-15",
+                    "y1": 1,
+                    "opacity": 1.0,
+                    "layer": "below",
+                    "line": {"width": 1.0, "color": "#ffffff", "dash": "dash",},
+                },
+            ],
+            "annotations": [
+                {
+                    "x": "2020-03-16",
+                    "y": 0.92,
+                    "xref": "x",
+                    "yref": "paper",
+                    "text": "Lockdown",
+                    "font": {"color": style.theme["accent"]},
+                    "align": "left",
+                    "showarrow": True,
+                    "arrowhead": 2,
+                    "arrowsize": 1,
+                    "arrowwidth": 1,
+                    "arrowcolor": style.theme["accent"],
+                },
+                {
+                    "x": "2020-04-14",
+                    "y": 0.92,
+                    "xref": "x",
+                    "yref": "paper",
+                    "text": "Small Shops Open",
+                    "font": {"color": style.theme["accent"]},
+                    "align": "left",
+                    "showarrow": True,
+                    "arrowhead": 2,
+                    "arrowsize": 1,
+                    "arrowwidth": 1,
+                    "arrowcolor": style.theme["accent"],
+                },
+                {
+                    "x": "2020-05-01",
+                    "y": 0.92,
+                    "xref": "x",
+                    "yref": "paper",
+                    "text": "All Shops Open",
+                    "font": {"color": style.theme["accent"]},
+                    "align": "left",
+                    "showarrow": True,
+                    "arrowhead": 2,
+                    "arrowsize": 1,
+                    "arrowwidth": 1,
+                    "arrowcolor": style.theme["accent"],
+                },
+                {
+                    "x": "2020-05-15",
+                    "y": 0.92,
+                    "xref": "x",
+                    "yref": "paper",
+                    "text": "Restaurants Open",
+                    "font": {"color": style.theme["accent"]},
+                    "align": "left",
+                    "showarrow": True,
+                    "arrowhead": 2,
+                    "arrowsize": 1,
+                    "arrowwidth": 1,
+                    "arrowcolor": style.theme["accent"],
+                },
+            ],
         },
     }
 
@@ -701,44 +1052,25 @@ def update_hospitalizations_ch_graph(selected_scale):
     return {
         "data": [
             {
-                "x": data.swiss_hospitalizations[:-1]["Date"],
-                "y": data.swiss_hospitalizations[:-1]["AT"],
+                "x": data.swiss_hospitalizations["Date"],
+                "y": data.swiss_hospitalizations["AT"],
                 "name": "Regular",
                 "mode": "lines",
                 "marker": {"color": style.theme["yellow"]},
                 "showlegend": True,
             },
             {
-                "x": data.swiss_icu[:-1]["Date"],
-                "y": data.swiss_icu[:-1]["AT"],
+                "x": data.swiss_icu["Date"],
+                "y": data.swiss_icu["AT"],
                 "name": "Intensive",
                 "mode": "lines",
                 "marker": {"color": style.theme["red"]},
-                "showlegend": True,
-            },
-            {
-                "x": data.swiss_hospitalizations.iloc[-2:]["Date"],
-                "y": data.swiss_hospitalizations.iloc[-2:]["AT"],
-                "name": "Regular",
-                "mode": "lines",
-                "line": {"dash": "dot"},
-                "marker": {"color": style.theme["yellow"]},
-                "showlegend": False,
-            },
-            {
-                "x": data.swiss_icu.iloc[-2:]["Date"],
-                "y": data.swiss_icu.iloc[-2:]["AT"],
-                "name": "Intensive",
-                "mode": "lines",
-                "line": {"dash": "dot"},
-                "marker": {"color": style.theme["red"]},
-                "showlegend": False,
             },
         ],
         "layout": {
             "title": "Total Reported Hospitalizations Austria",
             "height": 400,
-            "xaxis": {"showgrid": True, "color": "#ffffff", "title": "Date"},
+            "xaxis": {"showgrid": True, "color": "#ffffff"},
             "yaxis": {
                 "type": selected_scale,
                 "showgrid": True,
@@ -746,9 +1078,18 @@ def update_hospitalizations_ch_graph(selected_scale):
                 "rangemode": "tozero",
                 "title": "Hospitalizations",
             },
-            "hovermode": "closest",
+            "legend": {
+                "x": 0.8,
+                "y": 1,
+                "traceorder": "normal",
+                "font": {"family": "sans-serif", "color": "white"},
+                "bgcolor": style.theme["background"],
+                "bordercolor": style.theme["accent"],
+                "borderwidth": 1,
+            },
+            "hovermode": "x unified",
             "dragmode": False,
-            "margin": {"l": 60, "r": 20, "t": 60, "b": 70},
+            "margin": {"l": 60, "r": 20, "t": 60, "b": 40},
             "plot_bgcolor": style.theme["background"],
             "paper_bgcolor": style.theme["background"],
             "font": {"color": style.theme["foreground"]},
@@ -763,19 +1104,10 @@ def update_releases_ch_graph(selected_scale):
     return {
         "data": [
             {
-                "x": data.swiss_releases[:-1]["Date"],
-                "y": data.swiss_releases[:-1]["AT"],
+                "x": data.swiss_releases["Date"],
+                "y": data.swiss_releases["AT"],
                 "name": "Regular",
                 "mode": "lines",
-                "marker": {"color": style.theme["foreground"]},
-                "showlegend": False,
-            },
-            {
-                "x": data.swiss_releases.iloc[-2:]["Date"],
-                "y": data.swiss_releases.iloc[-2:]["AT"],
-                "name": "Regular",
-                "mode": "lines",
-                "line": {"dash": "dot"},
                 "marker": {"color": style.theme["foreground"]},
                 "showlegend": False,
             },
@@ -783,7 +1115,7 @@ def update_releases_ch_graph(selected_scale):
         "layout": {
             "title": "Total Reported Recoveries Austria",
             "height": 400,
-            "xaxis": {"showgrid": True, "color": "#ffffff", "title": "Date"},
+            "xaxis": {"showgrid": True, "color": "#ffffff"},
             "yaxis": {
                 "type": selected_scale,
                 "showgrid": True,
@@ -791,9 +1123,9 @@ def update_releases_ch_graph(selected_scale):
                 "rangemode": "tozero",
                 "title": "Releases",
             },
-            "hovermode": "closest",
+            "hovermode": "x unified",
             "dragmode": False,
-            "margin": {"l": 60, "r": 20, "t": 60, "b": 70},
+            "margin": {"l": 60, "r": 20, "t": 60, "b": 40},
             "plot_bgcolor": style.theme["background"],
             "paper_bgcolor": style.theme["background"],
             "font": {"color": style.theme["foreground"]},
@@ -814,8 +1146,6 @@ def update_case_world_graph(selected_scale):
                 "x": data.swiss_world_cases_normalized.index.values,
                 "y": data.swiss_world_cases_normalized[country],
                 "name": country,
-                # "marker": {"color": theme["foreground"]},
-                # "type": "bar",
             }
             for country in data.swiss_world_cases_normalized
             if country != "Day"
@@ -834,6 +1164,16 @@ def update_case_world_graph(selected_scale):
                 "color": "#ffffff",
                 "title": "Reported Cases / Population * 10,000",
             },
+            "legend": {
+                "x": 0.015,
+                "y": 1,
+                "traceorder": "normal",
+                "font": {"family": "sans-serif", "color": "white"},
+                "bgcolor": style.theme["background"],
+                "bordercolor": style.theme["accent"],
+                "borderwidth": 1,
+            },
+            "hovermode": "x unified",
             "dragmode": False,
             "margin": {"l": 60, "r": 20, "t": 60, "b": 70},
             "plot_bgcolor": style.theme["background"],
@@ -902,7 +1242,7 @@ def update_case_graph(selected_cantons, selected_scale):
         "layout": {
             "title": "Cases per State",
             "height": 400,
-            "xaxis": {"showgrid": True, "color": "#ffffff", "title": "Date"},
+            "xaxis": {"showgrid": True, "color": "#ffffff"},
             "yaxis": {
                 "type": selected_scale,
                 "showgrid": True,
@@ -910,7 +1250,7 @@ def update_case_graph(selected_cantons, selected_scale):
                 "title": "Reported Cases",
             },
             "dragmode": False,
-            "margin": {"l": 60, "r": 20, "t": 60, "b": 70},
+            "margin": {"l": 60, "r": 20, "t": 60, "b": 40},
             "plot_bgcolor": style.theme["background"],
             "paper_bgcolor": style.theme["background"],
             "font": {"color": style.theme["foreground"]},
@@ -937,7 +1277,7 @@ def update_case_pc_graph(selected_cantons, selected_scale):
         "layout": {
             "title": "Cases per State (per 10,000 Inhabitants)",
             "height": 400,
-            "xaxis": {"showgrid": True, "color": "#ffffff", "title": "Date"},
+            "xaxis": {"showgrid": True, "color": "#ffffff"},
             "yaxis": {
                 "type": selected_scale,
                 "showgrid": True,
@@ -945,7 +1285,7 @@ def update_case_pc_graph(selected_cantons, selected_scale):
                 "title": "Reported Cases / Population * 10,000",
             },
             "dragmode": False,
-            "margin": {"l": 60, "r": 20, "t": 60, "b": 70},
+            "margin": {"l": 60, "r": 20, "t": 60, "b": 40},
             "plot_bgcolor": style.theme["background"],
             "paper_bgcolor": style.theme["background"],
             "font": {"color": style.theme["foreground"]},
@@ -992,8 +1332,8 @@ def update_case_graph_diff(selected_cantons, selected_scale):
         ],
         "layout": {
             "title": "Newly Reported Cases per State",
-            "height": 400,
-            "xaxis": {"showgrid": True, "color": "#ffffff", "title": "Date"},
+            "height": 700,
+            "xaxis": {"showgrid": True, "color": "#ffffff"},
             "yaxis": {
                 "type": "linear",
                 "showgrid": True,
@@ -1001,7 +1341,7 @@ def update_case_graph_diff(selected_cantons, selected_scale):
                 "title": "Reported Cases",
             },
             "dragmode": False,
-            "margin": {"l": 60, "r": 20, "t": 60, "b": 70},
+            "margin": {"l": 60, "r": 20, "t": 60, "b": 40},
             "plot_bgcolor": style.theme["background"],
             "paper_bgcolor": style.theme["background"],
             "font": {"color": style.theme["foreground"]},
@@ -1075,7 +1415,7 @@ def update_prevalence_density_graph(selected_cantons):
         ],
         "layout": {
             "title": "Prevalence vs Population Density",
-            "hovermode": "closest",
+            "hovermode": "x unified",
             "height": 400,
             "xaxis": {
                 "type": "log",
@@ -1149,7 +1489,7 @@ def update_cfr_age_graph(selected_cantons):
         ],
         "layout": {
             "title": "Case Fatality Ratio vs Population over 65",
-            "hovermode": "closest",
+            "hovermode": "x unified",
             "height": 400,
             "xaxis": {
                 "showgrid": True,

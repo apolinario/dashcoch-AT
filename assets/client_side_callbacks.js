@@ -104,7 +104,7 @@ window.dash_clientside.clientside = {
       data: traces,
       layout: {
         title: "Newly Reported Cases",
-        height: 400,
+        height: 700,
         xaxis: {
           showgrid: true,
           color: "#ffffff",

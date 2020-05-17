@@ -1,5 +1,6 @@
 from configparser import ConfigParser
 from datetime import date, datetime, timedelta
+import numpy as np
 import pandas as pd
 from pytz import timezone
 from scipy import stats
@@ -42,7 +43,7 @@ class DataLoader:
             date.fromisoformat(d).strftime("%d. %m.")
             for d in self.swiss_cases_by_date_diff.index.values
         ]
-
+        
         self.swiss_fatalities_by_date_diff = self.swiss_fatalities_by_date.diff().replace(
             0, float("nan")
         )
@@ -103,7 +104,21 @@ class DataLoader:
         self.moving_total = self.__get_moving_total(
             self.swiss_cases_by_date.diff()
         ).replace(0, float("nan"))
-
+        
+        self.swiss_cases_by_date_diff["AT_rolling"] = np.round(
+            self.swiss_cases_by_date_diff["AT"]
+            .rolling(7, center=True)
+            .mean(),
+            0,
+        )
+        
+        self.swiss_fatalities_by_date_diff["AT_rolling"] = np.round(
+            self.swiss_fatalities_by_date_diff["AT"]
+            .rolling(7, center=True)
+            .mean(),
+            0,
+        )
+        
         #
         # World related data
         #
