@@ -731,7 +731,7 @@ def update_new_case_ch_graph(selected_scale):
             {
                 "x": data.swiss_cases_by_date_diff.index,
                 "y": data.swiss_cases_by_date_diff[total_column_name + "_rolling"],
-                "name": "moving_average",
+                "name": "Moving Average",
                 "mode": "lines",
                 "marker": {"color": style.theme["foreground"]},
                 "fill": "tozeroy",
@@ -898,7 +898,7 @@ def update_new_fatalities_ch_graph(selected_scale):
                 "y": data.swiss_fatalities_by_date_diff[
                     total_column_name + "_rolling"
                 ],
-                "name": "moving_average",
+                "name": "Moving Average",
                 "mode": "lines",
                 "marker": {"color": style.theme["foreground"]},
                 "fill": "tozeroy",
