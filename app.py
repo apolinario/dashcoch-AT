@@ -388,7 +388,7 @@ def get_layout():
                     marks={
                         i: date.fromisoformat(d).strftime("%d. %m.")
                         for i, d in enumerate(data.swiss_cases["Date"])
-                        if date.fromisoformat(d).weekday() == 0
+                        if date.fromisoformat(d).day == 1
                     },
                     value=len(data.moving_total) - 1,
                     updatemode="drag",
