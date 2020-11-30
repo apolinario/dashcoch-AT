@@ -1131,7 +1131,7 @@ def update_hospitalizations_ch_graph(selected_scale):
                 "title": "Hospitalizations",
             },
             "legend": {
-                "x": 0.8,
+                "x": 0.5,
                 "y": 1,
                 "traceorder": "normal",
                 "font": {"family": "sans-serif", "color": "white"},
