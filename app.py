@@ -432,7 +432,7 @@ def get_layout():
                     Austrian map from [@ginseng666](https://github.com/ginseng666/GeoJSON-TopoJSON-Austria).
                     Austrian demographic information from [Statistik Austria](http://www.statistik.at/web_de/statistiken/menschen_und_gesellschaft/bevoelkerung/bevoelkerungsstruktur/bevoelkerung_nach_alter_geschlecht/index.html).
                     Austrian bed information from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](http://www.kaz.bmgf.gv.at/ressourcen-inanspruchnahme/betten.html).
-                    Dashboards for other countries: [Switzerland](http://www.corona-data.ch), [Ukraine](http://dashcoch-ua.herokuapp.com).
+                    Dashboards for other countries: [Switzerland](http://www.corona-data.ch).
                     """
                 )
             ],
