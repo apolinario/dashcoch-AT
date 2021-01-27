@@ -165,9 +165,10 @@ def append_csv(filename, data):
 
     values['Date'] = execution_date
 
-    df = df.append(values, ignore_index=True)
     df['Date'] = pd.to_datetime(df['Date'])
     df = df.set_index('Date')
+    df.update([values])
+    df.sort_index(inplace=True)
     df.to_csv(filename)
 
 
