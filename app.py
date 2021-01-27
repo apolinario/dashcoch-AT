@@ -189,7 +189,7 @@ def get_layout():
                     marks={
                         i: date.fromisoformat(d).strftime("%d. %m.")
                         for i, d in enumerate(data.swiss_cases["Date"])
-                        if date.fromisoformat(d).weekday() == 0
+                        if date.fromisoformat(d).day == 1
                     },
                     value=len(data.swiss_cases["Date"]) - 1,
                     updatemode="drag",
@@ -388,7 +388,7 @@ def get_layout():
                     marks={
                         i: date.fromisoformat(d).strftime("%d. %m.")
                         for i, d in enumerate(data.swiss_cases["Date"])
-                        if date.fromisoformat(d).weekday() == 0
+                        if date.fromisoformat(d).day == 1
                     },
                     value=len(data.moving_total) - 1,
                     updatemode="drag",
@@ -432,7 +432,7 @@ def get_layout():
                     Austrian map from [@ginseng666](https://github.com/ginseng666/GeoJSON-TopoJSON-Austria).
                     Austrian demographic information from [Statistik Austria](http://www.statistik.at/web_de/statistiken/menschen_und_gesellschaft/bevoelkerung/bevoelkerungsstruktur/bevoelkerung_nach_alter_geschlecht/index.html).
                     Austrian bed information from [Bundesministerium für Soziales, Gesundheit, Pflege und Konsumentenschutz](http://www.kaz.bmgf.gv.at/ressourcen-inanspruchnahme/betten.html).
-                    Dashboards for other countries: [Switzerland](http://www.corona-data.ch), [Ukraine](http://dashcoch-ua.herokuapp.com).
+                    Dashboards for other countries: [Switzerland](http://www.corona-data.ch).
                     """
                 )
             ],
@@ -783,18 +783,6 @@ def update_new_case_ch_graph(selected_scale):
                     "type": "line",
                     "xref": "x",
                     "yref": "paper",
-                    "x0": "2020-04-14",
-                    "y0": 0,
-                    "x1": "2020-04-14",
-                    "y1": 1,
-                    "opacity": 1.0,
-                    "layer": "below",
-                    "line": {"width": 1.0, "color": "#ffffff", "dash": "dash",},
-                },
-                {
-                    "type": "line",
-                    "xref": "x",
-                    "yref": "paper",
                     "x0": "2020-05-02",
                     "y0": 0,
                     "x1": "2020-05-02",
@@ -815,6 +803,30 @@ def update_new_case_ch_graph(selected_scale):
                     "layer": "below",
                     "line": {"width": 1.0, "color": "#ffffff", "dash": "dash",},
                 },
+                {
+                    "type": "line",
+                    "xref": "x",
+                    "yref": "paper",
+                    "x0": "2020-11-03",
+                    "y0": 0,
+                    "x1": "2020-11-03",
+                    "y1": 1,
+                    "opacity": 1.0,
+                    "layer": "below",
+                    "line": {"width": 1.0, "color": "#ffffff", "dash": "dash",},
+                },
+                {
+                    "type": "line",
+                    "xref": "x",
+                    "yref": "paper",
+                    "x0": "2020-11-17",
+                    "y0": 0,
+                    "x1": "2020-11-17",
+                    "y1": 1,
+                    "opacity": 1.0,
+                    "layer": "below",
+                    "line": {"width": 1.0, "color": "#ffffff", "dash": "dash",},
+                },
             ],
             "annotations": [
                 {
@@ -823,20 +835,6 @@ def update_new_case_ch_graph(selected_scale):
                     "xref": "x",
                     "yref": "paper",
                     "text": "Lockdown",
-                    "font": {"color": style.theme["accent"]},
-                    "align": "left",
-                    "showarrow": True,
-                    "arrowhead": 2,
-                    "arrowsize": 1,
-                    "arrowwidth": 1,
-                    "arrowcolor": style.theme["accent"],
-                },
-                {
-                    "x": "2020-04-14",
-                    "y": 0.92,
-                    "xref": "x",
-                    "yref": "paper",
-                    "text": "Small Shops Open",
                     "font": {"color": style.theme["accent"]},
                     "align": "left",
                     "showarrow": True,
@@ -873,6 +871,34 @@ def update_new_case_ch_graph(selected_scale):
                     "arrowwidth": 1,
                     "arrowcolor": style.theme["accent"],
                 },
+                {
+                    "x": "2020-11-03",
+                    "y": 0.92,
+                    "xref": "x",
+                    "yref": "paper",
+                    "text": "Lockdown light",
+                    "font": {"color": style.theme["accent"]},
+                    "align": "left",
+                    "showarrow": True,
+                    "arrowhead": 2,
+                    "arrowsize": 1,
+                    "arrowwidth": 1,
+                    "arrowcolor": style.theme["accent"],
+                },
+                {
+                    "x": "2020-11-17",
+                    "y": 0.82,
+                    "xref": "x",
+                    "yref": "paper",
+                    "text": "Lockdown",
+                    "font": {"color": style.theme["accent"]},
+                    "align": "left",
+                    "showarrow": True,
+                    "arrowhead": 2,
+                    "arrowsize": 1,
+                    "arrowwidth": 1,
+                    "arrowcolor": style.theme["accent"],
+                },
             ],
         },
     }
@@ -893,16 +919,16 @@ def update_new_fatalities_ch_graph(selected_scale):
                 "marker": {"color": style.theme["foreground"], "opacity": 0.5},
                 "showlegend": False,
             },
-            {
-                "x": data.swiss_fatalities_by_date_diff.index,
-                "y": data.swiss_fatalities_by_date_diff[
-                    total_column_name + "_rolling"
-                ],
-                "name": "Moving Average",
-                "mode": "lines",
-                "marker": {"color": style.theme["foreground"]},
-                "fill": "tozeroy",
-            },
+#            {
+#                "x": data.swiss_fatalities_by_date_diff.index,
+#                "y": data.swiss_fatalities_by_date_diff[
+#                    total_column_name + "_rolling"
+#                ],
+#                "name": "Moving Average",
+#                "mode": "lines",
+#                "marker": {"color": style.theme["foreground"]},
+#                "fill": "tozeroy",
+#            },
         ],
         "layout": {
             "title": "Newly Reported Fatalities Austria",
@@ -950,18 +976,6 @@ def update_new_fatalities_ch_graph(selected_scale):
                     "type": "line",
                     "xref": "x",
                     "yref": "paper",
-                    "x0": "2020-04-14",
-                    "y0": 0,
-                    "x1": "2020-04-14",
-                    "y1": 1,
-                    "opacity": 1.0,
-                    "layer": "below",
-                    "line": {"width": 1.0, "color": "#ffffff", "dash": "dash",},
-                },
-                {
-                    "type": "line",
-                    "xref": "x",
-                    "yref": "paper",
                     "x0": "2020-05-02",
                     "y0": 0,
                     "x1": "2020-05-02",
@@ -982,6 +996,30 @@ def update_new_fatalities_ch_graph(selected_scale):
                     "layer": "below",
                     "line": {"width": 1.0, "color": "#ffffff", "dash": "dash",},
                 },
+                {
+                    "type": "line",
+                    "xref": "x",
+                    "yref": "paper",
+                    "x0": "2020-11-03",
+                    "y0": 0,
+                    "x1": "2020-11-03",
+                    "y1": 1,
+                    "opacity": 1.0,
+                    "layer": "below",
+                    "line": {"width": 1.0, "color": "#ffffff", "dash": "dash",},
+                },
+                {
+                    "type": "line",
+                    "xref": "x",
+                    "yref": "paper",
+                    "x0": "2020-11-17",
+                    "y0": 0,
+                    "x1": "2020-11-17",
+                    "y1": 1,
+                    "opacity": 1.0,
+                    "layer": "below",
+                    "line": {"width": 1.0, "color": "#ffffff", "dash": "dash",},
+                },
             ],
             "annotations": [
                 {
@@ -990,20 +1028,6 @@ def update_new_fatalities_ch_graph(selected_scale):
                     "xref": "x",
                     "yref": "paper",
                     "text": "Lockdown",
-                    "font": {"color": style.theme["accent"]},
-                    "align": "left",
-                    "showarrow": True,
-                    "arrowhead": 2,
-                    "arrowsize": 1,
-                    "arrowwidth": 1,
-                    "arrowcolor": style.theme["accent"],
-                },
-                {
-                    "x": "2020-04-14",
-                    "y": 0.92,
-                    "xref": "x",
-                    "yref": "paper",
-                    "text": "Small Shops Open",
                     "font": {"color": style.theme["accent"]},
                     "align": "left",
                     "showarrow": True,
@@ -1032,6 +1056,34 @@ def update_new_fatalities_ch_graph(selected_scale):
                     "xref": "x",
                     "yref": "paper",
                     "text": "Restaurants Open",
+                    "font": {"color": style.theme["accent"]},
+                    "align": "left",
+                    "showarrow": True,
+                    "arrowhead": 2,
+                    "arrowsize": 1,
+                    "arrowwidth": 1,
+                    "arrowcolor": style.theme["accent"],
+                },
+                {
+                    "x": "2020-11-03",
+                    "y": 0.92,
+                    "xref": "x",
+                    "yref": "paper",
+                    "text": "Lockdown light",
+                    "font": {"color": style.theme["accent"]},
+                    "align": "left",
+                    "showarrow": True,
+                    "arrowhead": 2,
+                    "arrowsize": 1,
+                    "arrowwidth": 1,
+                    "arrowcolor": style.theme["accent"],
+                },
+                {
+                    "x": "2020-11-17",
+                    "y": 0.82,
+                    "xref": "x",
+                    "yref": "paper",
+                    "text": "Lockdown",
                     "font": {"color": style.theme["accent"]},
                     "align": "left",
                     "showarrow": True,
@@ -1079,7 +1131,7 @@ def update_hospitalizations_ch_graph(selected_scale):
                 "title": "Hospitalizations",
             },
             "legend": {
-                "x": 0.8,
+                "x": 0.5,
                 "y": 1,
                 "traceorder": "normal",
                 "font": {"family": "sans-serif", "color": "white"},
