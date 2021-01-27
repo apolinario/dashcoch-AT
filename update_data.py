@@ -158,16 +158,19 @@ def append_csv(filename, data):
     for d in data: 
         values[STATES[d[0]]] = int(d[1].replace('.', ''))
 
-    execution_date = date.today()
+    today_str = date.today().strftime('%Y-%m-%d')
     sum_at = sum([v for k, v in values.items() if k != 'AT'])
     if sum_at != values['AT']:
-        print('Sum differes from numbers online for {} at {}'.format(os.path.basename(filename), execution_date.strftime('%Y-%m-%d')))
+        print('Sum differs from numbers online for {} at {}'.format(os.path.basename(filename), today_str))
 
-    values['Date'] = execution_date
+    values['Date'] = today_str
 
+    if today_str in df['Date'].to_list():
+        df.update([values])
+    else:
+        df = df.append([values])
     df['Date'] = pd.to_datetime(df['Date'])
     df = df.set_index('Date')
-    df.update([values])
     df.sort_index(inplace=True)
     df.to_csv(filename)
 
